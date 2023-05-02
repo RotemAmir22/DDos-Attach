@@ -7,10 +7,8 @@ namespace Q_2
 {
     public partial class DDoSAttack : Form
     {
-        List<Process> processList;
         public DDoSAttack()
         {
-            processList = new List<Process>(); 
             InitializeComponent();
         }
 
@@ -25,10 +23,10 @@ namespace Q_2
             {
                 int inputAmount = int.Parse(amount.Text);
                 string inputPath = path.Text;
+                
                 for (int i = 0; i < inputAmount; i++)
                 {
-                    Process process = Process.Start("cmd", "/c start " + inputPath);
-                    processList.Add(process);
+                    Process.Start("cmd", "/c start " + inputPath);
                 }
             }
             
@@ -62,11 +60,10 @@ namespace Q_2
         {
             try
             {
-                foreach (Process process in processList)
+                foreach (Process process in Process.GetProcessesByName("chrome"))
                 {
                     process.Kill();
                 }
-                processList.Clear();
             }
             catch (Exception ex)
             {
